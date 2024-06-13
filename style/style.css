@@ -81,7 +81,7 @@ table {
   position: relative;
   margin-bottom: 15px;
 }
-.entryForm__form > div > input {
+.entryForm__input {
   font-family: "Rubik";
   box-sizing: border-box;
   padding: 20px 0 20px 20px;
@@ -91,13 +91,13 @@ table {
   font-size: 16px;
   width: 100%;
 }
-.entryForm__form > div > input::-moz-placeholder {
+.entryForm__input::-moz-placeholder {
   color: #aeaeae;
 }
-.entryForm__form > div > input::placeholder {
+.entryForm__input::placeholder {
   color: #aeaeae;
 }
-.entryForm__form > div > input:focus {
+.entryForm__input:focus {
   outline: none;
   border: 1px solid #303030;
 }
@@ -188,6 +188,14 @@ table {
   box-shadow: 0 0 0 1.5px #FF825B;
 }
 
+.isValid {
+  border-color: #07B461;
+}
+
+.notValid {
+  border-color: #FF3D54;
+}
+
 .container {
   padding: 5vh 10vh;
   font-family: "Rubik";
@@ -204,6 +212,9 @@ table {
   color: #303030;
   font-size: 22px;
   font-weight: 600;
+}
+.logo > a:focus {
+  outline: none;
 }
 
 .border {

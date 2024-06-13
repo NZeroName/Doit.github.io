@@ -30,7 +30,7 @@
   position: relative;
   margin-bottom: 15px;
 }
-.entryForm__form > div > input {
+.entryForm__input {
   font-family: "Rubik";
   box-sizing: border-box;
   padding: 20px 0 20px 20px;
@@ -40,13 +40,13 @@
   font-size: 16px;
   width: 100%;
 }
-.entryForm__form > div > input::-moz-placeholder {
+.entryForm__input::-moz-placeholder {
   color: #aeaeae;
 }
-.entryForm__form > div > input::placeholder {
+.entryForm__input::placeholder {
   color: #aeaeae;
 }
-.entryForm__form > div > input:focus {
+.entryForm__input:focus {
   outline: none;
   border: 1px solid #303030;
 }
@@ -88,32 +88,32 @@
   text-decoration: underline;
 }
 
-.check {
+.checkbox {
   padding-left: 34px;
   font-size: 14px;
   display: flex;
   align-items: center;
   padding-top: 25px;
 }
-.check > a {
+.checkbox > a {
   text-decoration: none;
   color: #FF825B;
   cursor: pointer;
 }
-.check > a:hover {
+.checkbox > a:hover {
   text-decoration: underline;
 }
-.check > a:focus {
+.checkbox > a:focus {
   text-decoration: underline;
   outline: none;
 }
-.check__input {
+.checkbox__input {
   position: absolute;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
-.check__box {
+.checkbox__box {
   position: absolute;
   margin-top: -2px;
   margin-left: -34px;
@@ -126,13 +126,21 @@
   box-shadow: 0 0 0 1.5px #303030;
   /* Checked */
 }
-.check__input:checked + .check__box {
+.checkbox__input:checked + .check__box {
   background-color: #FF825B;
   box-shadow: 0 0 0 1.5px #FF825B;
   background-image: url("../img/checked.svg");
   background-position: 60% 50%;
   /* Focused */
 }
-.check__input:focus + .check__box {
+.checkbox__input:focus + .check__box {
   box-shadow: 0 0 0 1.5px #FF825B;
+}
+
+.isValid {
+  border-color: #07B461;
+}
+
+.notValid {
+  border-color: #FF3D54;
 }/*# sourceMappingURL=form.css.map */
