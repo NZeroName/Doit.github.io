@@ -1,0 +1,243 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap");
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.input__hint {
+  position: absolute;
+  top: -4px;
+  left: 18px;
+  padding: 0 3px;
+  z-index: 1;
+  background-color: white;
+  font-size: 12px;
+  color: #AEAEAE;
+}
+
+.entryForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  position: relative;
+}
+.entryForm__wrapper {
+  width: 100%;
+  padding: 0 170px;
+}
+.entryForm__wrapper > p {
+  font-size: 40px;
+  color: #303030;
+  margin-bottom: 50px;
+  font-weight: 500;
+}
+.entryForm__form > div {
+  position: relative;
+  margin-bottom: 15px;
+}
+.entryForm__form > div > input {
+  font-family: "Rubik";
+  box-sizing: border-box;
+  padding: 20px 0 20px 20px;
+  border-radius: 10px;
+  border: 1px solid #AEAEAE;
+  color: #303030;
+  font-size: 16px;
+  width: 100%;
+}
+.entryForm__form > div > input::-moz-placeholder {
+  color: #aeaeae;
+}
+.entryForm__form > div > input::placeholder {
+  color: #aeaeae;
+}
+.entryForm__form > div > input:focus {
+  outline: none;
+  border: 1px solid #303030;
+}
+.entryForm__btn {
+  width: 100%;
+  margin-top: 11px;
+  padding: 20px 0;
+  border: 1px solid #FF825B;
+  background-color: #FF825B;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.entryForm__btn:focus {
+  outline: none;
+  box-shadow: 0 1px 3px 1px #a5553c;
+}
+.entryForm__signIn {
+  position: absolute;
+  bottom: 9vh;
+  font-size: 22px;
+}
+
+.toggleForm {
+  border: none;
+  color: #FF825B;
+  background-color: transparent;
+  font-size: 22px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.toggleForm:hover {
+  text-decoration: underline;
+}
+.toggleForm:focus {
+  outline: none;
+  text-decoration: underline;
+}
+
+.check {
+  padding-left: 34px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding-top: 25px;
+}
+.check > a {
+  text-decoration: none;
+  color: #FF825B;
+  cursor: pointer;
+}
+.check > a:hover {
+  text-decoration: underline;
+}
+.check > a:focus {
+  text-decoration: underline;
+  outline: none;
+}
+.check__input {
+  position: absolute;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.check__box {
+  position: absolute;
+  margin-top: -2px;
+  margin-left: -34px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  border-radius: 2px;
+  background-color: white;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 1.5px #303030;
+  /* Checked */
+}
+.check__input:checked + .check__box {
+  background-color: #FF825B;
+  box-shadow: 0 0 0 1.5px #FF825B;
+  background-image: url("../img/checked.svg");
+  background-position: 60% 50%;
+  /* Focused */
+}
+.check__input:focus + .check__box {
+  box-shadow: 0 0 0 1.5px #FF825B;
+}
+
+.container {
+  padding: 5vh 10vh;
+  font-family: "Rubik";
+  height: 90vh;
+}
+
+.logo {
+  margin: 3vh 0 0 1.2vw;
+}
+.logo > a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: #303030;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.border {
+  border: 1px solid #d7d7d7;
+  border-radius: 20px;
+}
+
+.firstScreen {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+.firstScreen__banner {
+  background-image: url("../img/woman.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50%;
+  position: relative;
+  margin-right: 3vw;
+}
+
+.banner__textContent {
+  position: absolute;
+  bottom: -4vh;
+}
+.banner__subtitle {
+  font-size: 2vw;
+  font-weight: 400;
+  color: white;
+  width: 30vw;
+  margin-left: 1.3vw;
+}
+.banner__title {
+  font-size: 20vw;
+  font-weight: 600;
+  color: white;
+}/*# sourceMappingURL=style.css.map */
