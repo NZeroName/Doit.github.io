@@ -79,7 +79,15 @@ table {
 }
 .entryForm__form > div {
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.entryForm__error {
+  font-size: 14px;
+  position: absolute;
+  bottom: -20px;
+  color: #FF3D54;
 }
 .entryForm__input {
   font-family: "Rubik";
@@ -194,6 +202,38 @@ table {
 
 .notValid {
   border-color: #FF3D54;
+}
+
+.password > .eye {
+  position: absolute;
+  top: 17px;
+  right: 20px;
+}
+.password > .eye:hover {
+  cursor: pointer;
+}
+
+.hidePas {
+  filter: invert(86%) sepia(0%) saturate(716%) hue-rotate(277deg) brightness(82%) contrast(87%);
+}
+
+.showPas {
+  filter: invert(15%) sepia(0%) saturate(18%) hue-rotate(192deg) brightness(98%) contrast(87%);
+}
+
+.btnDisable {
+  opacity: 40%;
+  cursor: not-allowed;
+}
+
+.entryForm__btn {
+  transition: opacity 0.3s;
+}
+.entryForm__btn.btnDisable {
+  opacity: 0.4;
+}
+.entryForm__btn.btnEnable {
+  opacity: 1;
 }
 
 .container {

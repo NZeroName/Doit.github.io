@@ -28,7 +28,15 @@
 }
 .entryForm__form > div {
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.entryForm__error {
+  font-size: 14px;
+  position: absolute;
+  bottom: -20px;
+  color: #FF3D54;
 }
 .entryForm__input {
   font-family: "Rubik";
@@ -88,32 +96,32 @@
   text-decoration: underline;
 }
 
-.checkbox {
+.check {
   padding-left: 34px;
   font-size: 14px;
   display: flex;
   align-items: center;
   padding-top: 25px;
 }
-.checkbox > a {
+.check > a {
   text-decoration: none;
   color: #FF825B;
   cursor: pointer;
 }
-.checkbox > a:hover {
+.check > a:hover {
   text-decoration: underline;
 }
-.checkbox > a:focus {
+.check > a:focus {
   text-decoration: underline;
   outline: none;
 }
-.checkbox__input {
+.check__input {
   position: absolute;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
-.checkbox__box {
+.check__box {
   position: absolute;
   margin-top: -2px;
   margin-left: -34px;
@@ -126,14 +134,14 @@
   box-shadow: 0 0 0 1.5px #303030;
   /* Checked */
 }
-.checkbox__input:checked + .check__box {
+.check__input:checked + .check__box {
   background-color: #FF825B;
   box-shadow: 0 0 0 1.5px #FF825B;
   background-image: url("../img/checked.svg");
   background-position: 60% 50%;
   /* Focused */
 }
-.checkbox__input:focus + .check__box {
+.check__input:focus + .check__box {
   box-shadow: 0 0 0 1.5px #FF825B;
 }
 
@@ -143,4 +151,36 @@
 
 .notValid {
   border-color: #FF3D54;
+}
+
+.password > .eye {
+  position: absolute;
+  top: 17px;
+  right: 20px;
+}
+.password > .eye:hover {
+  cursor: pointer;
+}
+
+.hidePas {
+  filter: invert(86%) sepia(0%) saturate(716%) hue-rotate(277deg) brightness(82%) contrast(87%);
+}
+
+.showPas {
+  filter: invert(15%) sepia(0%) saturate(18%) hue-rotate(192deg) brightness(98%) contrast(87%);
+}
+
+.btnDisable {
+  opacity: 40%;
+  cursor: not-allowed;
+}
+
+.entryForm__btn {
+  transition: opacity 0.3s;
+}
+.entryForm__btn.btnDisable {
+  opacity: 0.4;
+}
+.entryForm__btn.btnEnable {
+  opacity: 1;
 }/*# sourceMappingURL=form.css.map */
