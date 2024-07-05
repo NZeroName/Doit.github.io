@@ -1,9 +1,23 @@
+"use strict";
+// localStorage.clear();
+// Получение данных из localStorage
+const savedData = localStorage.getItem("userData");
+let users = JSON.parse(savedData);
+if (savedData) {
+  users;
+} else {
+  users = [];
+}
+console.log("Загруженные данные из localStorage:", users);
+
+// Инициализация формы при загрузке страницы
 document.addEventListener("DOMContentLoaded", function () {
   updateForm(loginTemplate());
 });
 
 const formContainer = document.querySelector(".entryForm");
 
+// Обработчики событий для переключения между формами регистрации и входа
 formContainer.addEventListener("click", (e) => {
   if (e.target.classList.contains("registration")) {
     updateForm(SignupTemplate());
@@ -12,26 +26,19 @@ formContainer.addEventListener("click", (e) => {
   }
 });
 
+// Обновление содержимого формы
 function updateForm(template) {
   formContainer.innerHTML = template;
   whatIsForm();
 }
 
+// Определение типа формы и валидация
 function whatIsForm() {
-  const submitBtn = document.querySelector(".entryForm__btn");
-  const formName = document
-    .querySelector(".entryForm__wrapper")
-    .querySelector(".formName").textContent;
+  const formName = document.querySelector(".formName").textContent;
   formValidation(formName);
-
-  submitBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (isFormValid()) {
-      redirectToPage();
-    }
-  });
 }
 
+// Проверка валидности формы
 function isFormValid() {
   const inputs = document
     .querySelector(".entryForm__form")
@@ -41,13 +48,15 @@ function isFormValid() {
   for (let input of inputs) {
     if (!input.classList.contains("isValid")) {
       valid = false;
-      formError(input);
     }
   }
   return valid;
 }
 
-function redirectToPage() {
+// Перенаправление на другую страницу после успешного входа/регистрации
+function redirectToPage(userId) {
+  removeError(email);
+  localStorage.setItem("currentUserId", userId); // Сохранение идентификатора текущего пользователя
   const submitBtn = document.querySelector(".entryForm__btn");
   if (submitBtn.textContent === "Log in") {
     window.location.href = "test.html";
@@ -56,6 +65,7 @@ function redirectToPage() {
   }
 }
 
+// Шаблон формы регистрации
 function SignupTemplate() {
   return `
     <div class="entryForm__wrapper">
@@ -83,6 +93,7 @@ function SignupTemplate() {
     </div>`;
 }
 
+// Шаблон формы входа
 function loginTemplate() {
   return `
     <div class="entryForm__wrapper">
@@ -107,36 +118,73 @@ function formValidation(formName) {
   const inputs = document
     .querySelector(".entryForm__form")
     .getElementsByTagName("input");
+
   if (formName === "Log in") {
-    for (let input of inputs) {
+    Array.from(inputs).forEach((input) => {
       hint(input);
       hideHint(input);
-      formError(input);
-      document
-        .querySelector(".entryForm__btn")
-        .addEventListener("click", () => {
-          validaton(input);
-          formError(input);
-        });
-    }
+    });
+
+    document.querySelector(".entryForm__btn").addEventListener("click", (e) => {
+      e.preventDefault();
+      handleLoginForm(inputs);
+    });
   } else if (formName === "Sign up") {
-    for (let input of inputs) {
+    Array.from(inputs).forEach((input) => {
       hint(input);
       hideHint(input);
-      formError(input);
       input.addEventListener("blur", () => {
-        validaton(input);
-        formError(input);
+        validateInput(input);
         toggleSubmitButtonState();
       });
-    }
+    });
+
+    document.querySelector(".entryForm__btn").addEventListener("click", (e) => {
+      e.preventDefault();
+      handleSignUpForm(inputs);
+    });
   }
+
   const passwordImg = document.querySelector(".password img");
   passwordImg.addEventListener("click", () =>
     togglePasswordVisibility(passwordImg)
   );
 }
 
+// Обработка формы входа
+function handleLoginForm(inputs) {
+  Array.from(inputs).forEach((input) => {
+    validateInput(input);
+  });
+  if (isFormValid()) {
+    const user = authorization(); // Изменено для возврата пользователя
+    if (user) {
+      redirectToPage(user.id);
+    }
+  }
+}
+
+// Обработка формы регистрации
+function handleSignUpForm(inputs) {
+  Array.from(inputs).forEach((input) => {
+    validateInput(input);
+  });
+  if (isFormValid()) {
+    const newUser = getFormData();
+    if (newUser) {
+      storage();
+    }
+    redirectToPage();
+  }
+}
+
+// Валидация каждого инпута
+function validateInput(input) {
+  validaton(input);
+  formError(input);
+}
+
+// Подсказка при фокусе на элемент
 function hint(elem) {
   elem.addEventListener("focus", (e) => {
     if (
@@ -149,6 +197,7 @@ function hint(elem) {
   });
 }
 
+// Скрытие подсказки при потере фокуса
 function hideHint(elem) {
   elem.addEventListener("blur", (e) => {
     if (elem.value === "") {
@@ -159,6 +208,7 @@ function hideHint(elem) {
   });
 }
 
+// Создание подсказки
 function createHint(elem) {
   elem.insertAdjacentHTML(
     "beforebegin",
@@ -166,6 +216,7 @@ function createHint(elem) {
   );
 }
 
+// Отображение ошибки формы
 function formError(elem) {
   const inputName = elem.name.toLowerCase();
   const errorElement = elem.parentNode.querySelector(".entryForm__error");
@@ -176,10 +227,17 @@ function formError(elem) {
       `<span class='entryForm__error'>Wrong ${inputName}</span>`
     );
   } else if (elem.classList.contains("isValid") && errorElement) {
+    removeError(elem);
+  }
+}
+function removeError(input) {
+  const errorElement = input.parentNode.querySelector(".entryForm__error");
+  if (errorElement) {
     errorElement.remove();
   }
 }
 
+// Валидация полей формы
 function validaton(input) {
   const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
   const nameRegex = /^[а-яёa-z'-]{2,50}$/i;
@@ -205,8 +263,8 @@ function validaton(input) {
         : input.classList.add("notValid");
       break;
     case "Repeat password":
-      input.value !== "" &&
-      input.value === document.getElementById("password").value
+      const password = document.querySelector('input[name="Password"]').value;
+      input.value === password
         ? input.classList.add("isValid")
         : input.classList.add("notValid");
       break;
@@ -215,9 +273,15 @@ function validaton(input) {
         ? input.classList.add("isValid")
         : input.classList.add("notValid");
       break;
+    default:
+      input.value
+        ? input.classList.add("isValid")
+        : input.classList.add("notValid");
+      break;
   }
 }
 
+// Переключение видимости пароля
 function togglePasswordVisibility(img) {
   const input = img.previousElementSibling;
   const isPassword = input.type === "password";
@@ -226,6 +290,7 @@ function togglePasswordVisibility(img) {
   img.classList.toggle("showPas", isPassword);
 }
 
+// Переключение состояния кнопки отправки формы
 function toggleSubmitButtonState() {
   const submitBtn = document.querySelector(".entryForm__btn");
   const isValidForm = isFormValid();
@@ -236,4 +301,101 @@ function toggleSubmitButtonState() {
     submitBtn.classList.remove("btnEnable");
     submitBtn.classList.add("btnDisable");
   }
+}
+
+// Получение данных формы
+function getFormData() {
+  const name = document.querySelector('input[name="Name"]').value;
+  const email = document.querySelector('input[name="E-mail"]').value;
+  const password = document.querySelector('input[name="Password"]').value;
+  const id = users.length + 1;
+
+  const formData = {
+    id: id,
+    name: name,
+    email: email,
+    password: password,
+  };
+
+  // Проверка уникальности почты на клиентской стороне
+  if (!isEmailUnique(email)) {
+    console.error("Пользователь с такой почтой уже существует.");
+    document.querySelector('input[name="E-mail"]').classList.remove("isValid");
+    document.querySelector('input[name="E-mail"]').classList.add("notValid");
+    formError(document.querySelector('input[name="E-mail"]'));
+    return null;
+  }
+
+  console.log("Проверка уникальности пройдена. Добавление пользователя...");
+  users.push(formData);
+  console.log("Текущий список пользователей:", users);
+  return formData;
+}
+
+// Авторизация пользователя
+function authorization() {
+  const email = document.querySelector('input[name="E-mail"]');
+  const password = document.querySelector('input[name="Password"]');
+  const users = JSON.parse(localStorage.getItem("userData")) || [];
+  let trueEmail = false;
+  let truePassword = false;
+  email.classList.remove("notValid");
+  email.classList.remove("isValid");
+  password.classList.remove("notValid");
+  password.classList.remove("isValid");
+  if (users.length === 0) {
+    email.classList.remove("isValid");
+    email.classList.add("notValid");
+    formError(email);
+    password.classList.remove("isValid");
+    password.classList.add("notValid");
+    formError(password);
+    return;
+  }
+
+  users.forEach((user) => {
+    for (const key in user) {
+      if (!trueEmail && !truePassword) {
+        if (user[key] === email.value) {
+          trueEmail = true;
+          email.classList.remove("notValid");
+          email.classList.add("isValid");
+          removeError(email);
+          if (user.password === password.value) {
+            truePassword = true;
+            password.classList.remove("notValid");
+            password.classList.add("isValid");
+          } else {
+            password.classList.add("notValid");
+            password.classList.remove("isValid");
+            formError(password);
+            return;
+          }
+          if (trueEmail && truePassword) {
+            removeError(email);
+            removeError(password);
+            return redirectToPage(user.id);
+          }
+        } else {
+          email.classList.add("notValid");
+          password.classList.add("notValid");
+          formError(email);
+          formError(password);
+        }
+      } else return;
+    }
+  });
+}
+
+// Сохранение данных в localStorage
+function storage() {
+  console.log("Сохранение данных в localStorage...");
+  const jsonData = JSON.stringify(users);
+  localStorage.setItem("userData", jsonData);
+  console.log("Данные сохранены:", jsonData);
+}
+
+// Проверка уникальности почты
+function isEmailUnique(email) {
+  return !users.some((user) => user.email === email);
 }

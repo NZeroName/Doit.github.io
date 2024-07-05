@@ -7,5 +7,34 @@
   </head>
   <body>
     <h1>HELLO WORDLS</h1>
+    <script>
+      // document.addEventListener("DOMContentLoaded", function () {
+      //   const currentUserId = localStorage.getItem("currentUserId");
+      //   const savedData = localStorage.getItem("userData");
+      //   let users = JSON.parse(savedData);
+      //   console.log(users);
+      //   if (currentUserId) {
+      //     console.log("Текущий пользователь:", currentUserId);
+      //     // Загрузите данные пользователя и выполните необходимые действия
+      //   } else {
+      //     console.error("Идентификатор пользователя не найден.");
+      //   }
+      //   document.body.innerHTML = `Имя пользователя ${
+      //     users[currentUserId - 1].name
+      //   }`;
+
+      // });
+      function getUserById(userId) {
+        const users = JSON.parse(localStorage.getItem("userData")) || [];
+        return users.find((user) => user.id === parseInt(userId));
+      }
+
+      // Пример использования
+      document.addEventListener("DOMContentLoaded", function () {
+        const currentUserId = localStorage.getItem("currentUserId");
+        const currentUser = getUserById(currentUserId);
+        document.body.innerHTML = `Приветствую тебя наш новый пользователь: ${currentUser.name}`;
+      });
+    </script>
   </body>
 </html>
