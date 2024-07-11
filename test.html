@@ -3,38 +3,149 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Doit</title>
+    <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
-    <h1>HELLO WORDLS</h1>
+    <div class="profile">
+      <div class="profile__sidebar">
+        <div class="profile__user">
+          <div class="profile__user_photo">I</div>
+          <div class="profile__user_name"></div>
+          <div class="profile__user_more">
+            <button class="profile__sidebar_show">
+              <img src="img/showCalendar.svg" alt="" />
+            </button>
+          </div>
+        </div>
+        <div class="profile__calendar">
+          <div class="profile__calendar_small">
+            <img src="img/calendar.svg" alt="calendar" />
+            <p class="profile__calendar_date">31 May</p>
+          </div>
+        </div>
+        <div class="logo">
+          <a href="test.html"
+            ><svg
+              width="47"
+              height="47"
+              viewBox="0 0 47 47"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.75 18.2713V28.7288C11.75 35.2305 16.3521 37.8742 21.9725 34.643L24.4792 33.1938C25.0862 32.8413 25.4583 32.195 25.4583 31.49V15.51C25.4583 14.805 25.0862 14.1588 24.4792 13.8063L21.9725 12.3571C16.3521 9.12588 11.75 11.7696 11.75 18.2713Z"
+                fill="#FFFFFF"
+              />
+              <path
+                opacity="0.4"
+                d="M27.4167 17.2138V29.8059C27.4167 30.5696 28.2392 31.0396 28.8854 30.648L31.0396 29.3946C36.66 26.1634 36.66 20.8367 31.0396 17.6055L28.8854 16.3521C28.2392 15.9801 27.4167 16.4501 27.4167 17.2138Z"
+                fill="#FFFFFF"
+              /></svg
+            >Doit</a
+          >
+        </div>
+      </div>
+      <div class="profile__main">
+        <div class="profile__task">
+          <div class="profile__task_header">
+            <p><span>Today</span> you have 4 points</p>
+          </div>
+          <button class="profile__addTask">New Task</button>
+        </div>
+        <div class="taskList">
+          <div class="taskList__task">
+            <div class="task__menu">
+              <img src="img/more.svg" alt="" />
+              <ul class="task__menu_toggle hide">
+                <li class="task__menu_item rename">Rename</li>
+                <li class="task__menu_item tag">Add/delete tag</li>
+                <li class="task__menu_item dublicate">Dublicate</li>
+                <li class="task__menu_item delete">Delete</li>
+              </ul>
+            </div>
+            <label class="check task">
+              <div>
+                <input
+                  type="checkbox"
+                  name="taskDone"
+                  class="check__input"
+                /><span class="check__box"></span>
+                <p class="task__name">Wash dog</p>
+              </div>
+              <div class="task__tags">
+                <p class="tag">home</p>
+                <p class="tag">eat</p>
+              </div>
+            </label>
+          </div>
+          <div class="taskList__task">
+            <div class="task__menu">
+              <img src="img/more.svg" alt="" />
+              <ul class="task__menu_toggle hide">
+                <li class="task__menu_item rename">Rename</li>
+                <li class="task__menu_item tag">Add/delete tag</li>
+                <li class="task__menu_item dublicate">Dublicate</li>
+                <li class="task__menu_item delete">Delete</li>
+              </ul>
+            </div>
+            <label class="check task">
+              <div>
+                <input
+                  type="checkbox"
+                  name="taskDone"
+                  class="check__input"
+                /><span class="check__box"></span>
+                <p class="task__name">Wash dog</p>
+              </div>
+              <div class="task__tags">
+                <p class="tag">home</p>
+                <p class="tag">eat</p>
+              </div>
+            </label>
+          </div>
+          <div class="taskList__task">
+            <div class="task__menu">
+              <img src="img/more.svg" alt="" />
+              <ul class="task__menu_toggle hide">
+                <li class="task__menu_item rename">Rename</li>
+                <li class="task__menu_item tag">Add/delete tag</li>
+                <li class="task__menu_item dublicate">Dublicate</li>
+                <li class="task__menu_item delete">Delete</li>
+              </ul>
+            </div>
+            <label class="check task">
+              <div>
+                <input
+                  type="checkbox"
+                  name="taskDone"
+                  class="check__input"
+                /><span class="check__box"></span>
+                <p class="task__name">Wash dog</p>
+              </div>
+              <div class="task__tags">
+                <p class="tag">home</p>
+                <p class="tag">dry</p>
+                <p class="tag">eat</p>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Пока не использовать -->
     <script>
+      // function getUserById(userId) {
+      // const users = JSON.parse(localStorage.getItem("userData")) || [];
+      // return users.find((user) => user.id === parseInt(userId));
+      // }
+      //
       // document.addEventListener("DOMContentLoaded", function () {
-      //   const currentUserId = localStorage.getItem("currentUserId");
-      //   const savedData = localStorage.getItem("userData");
-      //   let users = JSON.parse(savedData);
-      //   console.log(users);
-      //   if (currentUserId) {
-      //     console.log("Текущий пользователь:", currentUserId);
-      //     // Загрузите данные пользователя и выполните необходимые действия
-      //   } else {
-      //     console.error("Идентификатор пользователя не найден.");
-      //   }
-      //   document.body.innerHTML = `Имя пользователя ${
-      //     users[currentUserId - 1].name
-      //   }`;
-
+      // const currentUserId = localStorage.getItem("currentUserId");
+      // const currentUser = getUserById(currentUserId);
+      // document.body.innerHTML = `<p>Приветствую тебя наш новый пользователь: ${currentUser.name}</p>`;
       // });
-      function getUserById(userId) {
-        const users = JSON.parse(localStorage.getItem("userData")) || [];
-        return users.find((user) => user.id === parseInt(userId));
-      }
-
-      // Пример использования
-      document.addEventListener("DOMContentLoaded", function () {
-        const currentUserId = localStorage.getItem("currentUserId");
-        const currentUser = getUserById(currentUserId);
-        document.body.innerHTML = `Приветствую тебя наш новый пользователь: ${currentUser.name}`;
-      });
     </script>
   </body>
 </html>

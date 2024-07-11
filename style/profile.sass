@@ -1,0 +1,126 @@
+.profile
+    display: flex
+    height: 100vh
+    font-family: 'Rubik'
+    &__sidebar
+        padding-top: 67px
+        padding-left: 100px
+        background-color: #343B5B
+        border-radius: 0 20px 20px 0
+        width: 10vw
+        position: relative
+        &_show
+            background-color: transparent
+            border: 1px solid transparent
+        &>.logo
+            display: flex
+            align-items: center
+            margin: 0
+            position: absolute
+            bottom: 65px
+            &>a
+                font-size: 22px
+                font-weight: 600
+                color: #FFFFFF
+    &__user
+        display: flex
+        align-items: center
+        &_name
+            font-size: 22px
+            color: #FFFFFF
+            margin-left: 20px
+        &_photo
+            width: 30px
+            height: 30px
+            background-color: #FF825B
+            display: flex
+            align-items: center
+            color: #FFFFFF
+            font-size: 16px
+            border-radius: 5px
+            justify-content: center
+        &_more
+            margin-left: 47px
+            cursor: pointer
+    &__calendar
+        margin-top: 36px
+        &_small
+            display: flex
+            align-items: center
+        &_date
+            font-size: 16px
+            color: #FFFFFF
+            opacity: 50%
+            padding-left: 13px
+    &__main
+        margin: 55px 390px 0 330px
+    &__task
+        display: flex
+        align-items: center
+        &_header
+            font-size: 40px
+            color: #303030
+            font-weight: 500
+            &>p>span
+                color: #FF825B
+    &__addTask
+        background-color: #FF825B
+        border: 0
+        color: #FFFFFF
+        border-radius: 10px
+        width: 177px
+        height: 57px
+        font-size: 16px
+        font-weight: 600
+        margin-left: 20vw
+        cursor: pointer
+        background-image: url(../img/plus.svg)
+        background-repeat: no-repeat
+        background-position: 135px 15.5px
+.taskList
+    margin-top: 55px
+    &__task
+        display: flex
+        align-items: center
+        position: relative
+        width: 100%
+        &:hover
+            background-color: #F6F6F6
+            border-radius: 5px
+            cursor: pointer
+        &>.check
+            padding-left: 44px
+            font-size: 16px
+            &:hover
+                cursor: pointer
+.task__menu>img
+    margin-top: 3px
+.task__menu_toggle
+    position: absolute
+    display: none
+.task
+    width: 100%
+    justify-content: space-between
+    padding: 6px
+    &__status
+        width: 20px
+        height: 20px
+        border: 2px solid #303030
+        background-color: transparent
+        border-radius: 2px
+        &:focus
+            border: 10px
+    &__tags
+        display: flex
+.tag
+    margin-left: 8px
+    border: 1px solid #FFDCE0
+    border-radius: 5px
+    padding: 3px 6px
+    background-color: #FFDCE0
+.task-done
+    border: 2px solid #FF825B
+    background-color: #FF825B
+    background-image: url('../img/checked.svg')
+    background-repeat: no-repeat
+    background-position: 5px 6px

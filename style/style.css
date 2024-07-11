@@ -189,7 +189,7 @@ table {
   background-color: #FF825B;
   box-shadow: 0 0 0 1.5px #FF825B;
   background-image: url("../img/checked.svg");
-  background-position: 60% 50%;
+  background-position: 50% 50%;
   /* Focused */
 }
 .check__input:focus + .check__box {
@@ -234,6 +234,169 @@ table {
 }
 .entryForm__btn.btnEnable {
   opacity: 1;
+}
+
+.profile {
+  display: flex;
+  height: 100vh;
+  font-family: "Rubik";
+}
+.profile__sidebar {
+  padding-top: 67px;
+  padding-left: 100px;
+  background-color: #343B5B;
+  border-radius: 0 20px 20px 0;
+  width: 10vw;
+  position: relative;
+}
+.profile__sidebar_show {
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+.profile__sidebar > .logo {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  position: absolute;
+  bottom: 65px;
+}
+.profile__sidebar > .logo > a {
+  font-size: 22px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+.profile__user {
+  display: flex;
+  align-items: center;
+}
+.profile__user_name {
+  font-size: 22px;
+  color: #FFFFFF;
+  margin-left: 20px;
+}
+.profile__user_photo {
+  width: 30px;
+  height: 30px;
+  background-color: #FF825B;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+  font-size: 16px;
+  border-radius: 5px;
+  justify-content: center;
+}
+.profile__user_more {
+  margin-left: 47px;
+  cursor: pointer;
+}
+.profile__calendar {
+  margin-top: 36px;
+}
+.profile__calendar_small {
+  display: flex;
+  align-items: center;
+}
+.profile__calendar_date {
+  font-size: 16px;
+  color: #FFFFFF;
+  opacity: 50%;
+  padding-left: 13px;
+}
+.profile__main {
+  margin: 55px 390px 0 330px;
+}
+.profile__task {
+  display: flex;
+  align-items: center;
+}
+.profile__task_header {
+  font-size: 40px;
+  color: #303030;
+  font-weight: 500;
+}
+.profile__task_header > p > span {
+  color: #FF825B;
+}
+.profile__addTask {
+  background-color: #FF825B;
+  border: 0;
+  color: #FFFFFF;
+  border-radius: 10px;
+  width: 177px;
+  height: 57px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-left: 20vw;
+  cursor: pointer;
+  background-image: url(../img/plus.svg);
+  background-repeat: no-repeat;
+  background-position: 135px 15.5px;
+}
+
+.taskList {
+  margin-top: 55px;
+}
+.taskList__task {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+.taskList__task:hover {
+  background-color: #F6F6F6;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.taskList__task > .check {
+  padding-left: 44px;
+  font-size: 16px;
+}
+.taskList__task > .check:hover {
+  cursor: pointer;
+}
+
+.task__menu > img {
+  margin-top: 3px;
+}
+
+.task__menu_toggle {
+  position: absolute;
+  display: none;
+}
+
+.task {
+  width: 100%;
+  justify-content: space-between;
+  padding: 6px;
+}
+.task__status {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #303030;
+  background-color: transparent;
+  border-radius: 2px;
+}
+.task__status:focus {
+  border: 10px;
+}
+.task__tags {
+  display: flex;
+}
+
+.tag {
+  margin-left: 8px;
+  border: 1px solid #FFDCE0;
+  border-radius: 5px;
+  padding: 3px 6px;
+  background-color: #FFDCE0;
+}
+
+.task-done {
+  border: 2px solid #FF825B;
+  background-color: #FF825B;
+  background-image: url("../img/checked.svg");
+  background-repeat: no-repeat;
+  background-position: 5px 6px;
 }
 
 .container {
