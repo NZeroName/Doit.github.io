@@ -3,11 +3,10 @@
     height: 100vh
     font-family: 'Rubik'
     &__sidebar
-        padding-top: 67px
-        padding-left: 100px
+
+        padding: 67px 40px 0px 100px
         background-color: #343B5B
         border-radius: 0 20px 20px 0
-        width: 10vw
         position: relative
         &_show
             background-color: transparent
@@ -53,10 +52,12 @@
             opacity: 50%
             padding-left: 13px
     &__main
-        margin: 55px 390px 0 330px
+        margin: 55px 330px 0 310px
+        width: 100%
     &__task
         display: flex
         align-items: center
+        justify-content: space-between
         &_header
             font-size: 40px
             color: #303030
@@ -72,7 +73,6 @@
         height: 57px
         font-size: 16px
         font-weight: 600
-        margin-left: 20vw
         cursor: pointer
         background-image: url(../img/plus.svg)
         background-repeat: no-repeat
@@ -93,25 +93,46 @@
             font-size: 16px
             &:hover
                 cursor: pointer
-.task__menu>img
-    margin-top: 3px
-.task__menu_toggle
-    position: absolute
-    display: none
+.task__menu
+    &_change
+        padding-top: 3px
+        border: none
+        background-color: transparent
+        cursor: pointer
+        height: 24px
+.task__menu
+    &_toggle
+        position: absolute
+        z-index: 1
+        border-radius: 10px
+        background-color: #FFFFFF
+        margin-top: 5px
+        box-shadow: 0px 7px 15px 0px rgb(0 0 0 / 9%)
+    &_item
+        padding: 7px 74px 7px 15px
+        padding-right: 74px
+        font-size: 14px
+        display: flex
+        align-items: center
+        &:hover
+            background-color: #F6F6F6
+        &>img
+            padding-right: 8px
+        &:first-child
+            padding-top: 15px
+        &:last-child
+            border-top: 1px solid #D7D7D7
+            padding-bottom: 15px
+            margin-top: 7px
+            padding-top: 14px
+    &>task
 .task
     width: 100%
     justify-content: space-between
     padding: 6px
-    &__status
-        width: 20px
-        height: 20px
-        border: 2px solid #303030
-        background-color: transparent
-        border-radius: 2px
-        &:focus
-            border: 10px
     &__tags
         display: flex
+
 .tag
     margin-left: 8px
     border: 1px solid #FFDCE0
@@ -124,3 +145,7 @@
     background-image: url('../img/checked.svg')
     background-repeat: no-repeat
     background-position: 5px 6px
+.menu_hide
+    display: none
+.task_active
+    background-color: #FFF5F2!important
