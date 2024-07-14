@@ -96,16 +96,16 @@
               </button>
               <ul class="task__menu_toggle menu_hide">
                 <li class="task__menu_item rename">
-                  <img src="img/rename.svg" alt="" />Rename
+                  <img src="img/rename.svg" alt="rename" />Rename
                 </li>
                 <li class="task__menu_item changeTag">
-                  <img src="img/tag.svg" alt="" />Add/delete tag
+                  <img src="img/tag.svg" alt="tag" />Add/delete tag
                 </li>
                 <li class="task__menu_item dublicate">
-                  <img src="img/dublicate.svg" alt="" />Dublicate
+                  <img src="img/dublicate.svg" alt="dublicate" />Dublicate
                 </li>
                 <li class="task__menu_item delete">
-                  <img src="img/delete.svg" alt="" />Delete
+                  <img src="img/delete.svg" alt="delete" />Delete
                 </li>
               </ul>
             </div>
@@ -164,76 +164,6 @@
     </div>
 
     <!-- Пока не использовать -->
-    <script>
-      // function getUserById(userId) {
-      // const users = JSON.parse(localStorage.getItem("userData")) || [];
-      // return users.find((user) => user.id === parseInt(userId));
-      // }
-      //
-      // document.addEventListener("DOMContentLoaded", function () {
-      // const currentUserId = localStorage.getItem("currentUserId");
-      // const currentUser = getUserById(currentUserId);
-      // document.body.innerHTML = `<p>Приветствую тебя наш новый пользователь: ${currentUser.name}</p>`;
-      // });
-      //let menubtn = document.querySelectorAll(".task__menu");
-      //menubtn.forEach((elem) => {
-      //  let settings = elem.querySelector(".task__menu_toggle");
-      //  elem.addEventListener("click", (e) => {
-      //    if (settings.classList.contains("menu_hide")) {
-      //      settings.classList.toggle("menu_hide");
-      //    } else settings.classList.add("menu_hide");
-      //  });
-      //});
-      let menubtn = document.querySelectorAll(".task__menu");
-      let currentMenu = null;
-      let currentTask = null;
-
-      menubtn.forEach((elem) => {
-        let settings = elem.querySelector(".task__menu_toggle");
-        elem.addEventListener("click", (e) => {
-          e.stopPropagation();
-
-          let task = elem.parentNode;
-
-          // Сначала скрываем все меню, кроме текущего
-          menubtn.forEach((el) => {
-            let setting = el.querySelector(".task__menu_toggle");
-            let parentTask = el.parentNode;
-            if (setting !== settings) {
-              setting.classList.add("menu_hide");
-              parentTask.classList.remove("task_active");
-            }
-          });
-
-          // Переключаем видимость меню на текущем элементе
-          task.classList.toggle("task_active");
-          settings.classList.toggle("menu_hide");
-
-          currentMenu = settings.classList.contains("menu_hide")
-            ? null
-            : settings;
-          currentTask = settings.classList.contains("menu_hide") ? null : task;
-        });
-      });
-
-      document.addEventListener("click", (e) => {
-        if (currentMenu) {
-          currentMenu.classList.add("menu_hide");
-          currentTask.classList.remove("task_active");
-          currentMenu = null;
-          currentTask = null;
-        }
-      });
-
-      function getFormattedDate() {
-        const date = new Date();
-        const day = date.getDate();
-        const month = date.toLocaleString("en-US", { month: "long" }); // Пример: 'January', 'February', ...
-        return (document.querySelector(
-          ".profile__calendar_date"
-        ).innerHTML = `${day} ${month}`);
-      }
-      getFormattedDate();
-    </script>
+    <script src="script/tasks.js"></script>
   </body>
 </html>

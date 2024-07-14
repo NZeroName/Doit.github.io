@@ -4,10 +4,12 @@
   font-family: "Rubik";
 }
 .profile__sidebar {
+  width: 10%;
   padding: 67px 40px 0px 100px;
   background-color: #343B5B;
   border-radius: 0 20px 20px 0;
   position: relative;
+  transition: width 0.5s;
 }
 .profile__sidebar_show {
   background-color: transparent;
@@ -28,11 +30,16 @@
 .profile__user {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  position: relative;
 }
 .profile__user_name {
   font-size: 22px;
   color: #FFFFFF;
   margin-left: 20px;
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
 }
 .profile__user_photo {
   width: 30px;
@@ -45,8 +52,8 @@
   border-radius: 5px;
   justify-content: center;
 }
-.profile__user_more {
-  margin-left: 47px;
+.profile__user_more > button {
+  margin-top: 3px;
   cursor: pointer;
 }
 .profile__calendar {
@@ -64,7 +71,7 @@
 }
 .profile__main {
   margin: 55px 330px 0 310px;
-  width: 100%;
+  width: 90%;
 }
 .profile__task {
   display: flex;
@@ -84,14 +91,13 @@
   border: 0;
   color: #FFFFFF;
   border-radius: 10px;
-  width: 177px;
-  height: 57px;
+  padding: 19px 69px 19px 35px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   background-image: url(../img/plus.svg);
   background-repeat: no-repeat;
-  background-position: 135px 15.5px;
+  background-position: 118px 14.5px;
 }
 
 .taskList {
@@ -134,7 +140,6 @@
 }
 .task__menu_item {
   padding: 7px 74px 7px 15px;
-  padding-right: 74px;
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -154,6 +159,7 @@
   margin-top: 7px;
   padding-top: 14px;
 }
+
 .task {
   width: 100%;
   justify-content: space-between;
@@ -185,4 +191,40 @@
 
 .task_active {
   background-color: #FFF5F2 !important;
+}
+
+.showSidebar {
+  width: 45%;
+  transition: 0.5s;
+}
+
+.hiddeSidebar {
+  width: 10%;
+  transition: width 1s;
+}
+
+.showName {
+  opacity: 1;
+  transition: opacity 1s;
+  z-index: 1;
+  left: 30px;
+}
+
+.delete_yes {
+  color: #FFFFFF;
+  border: 1px solid transparent;
+  background-color: #FF825B;
+  padding: 3px 6px;
+  border-radius: 5px;
+  margin-left: 40px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.delete_no {
+  color: #B8B8B8;
+  border: 1px solid transparent;
+  background-color: #EDEDED;
+  padding: 3px 6px;
+  border-radius: 5px;
+  cursor: pointer;
 }/*# sourceMappingURL=profile.css.map */
