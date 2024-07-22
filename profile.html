@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Doit</title>
     <link rel="stylesheet" href="style/style.css" />
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const currentUserId = localStorage.getItem("currentUserId");
+
+        if (!currentUserId) {
+          // Перенаправление на страницу авторизации, если пользователь не авторизован
+          window.location.href = "index.html";
+        }
+      });
+    </script>
   </head>
   <body>
     <div class="profile">
@@ -49,7 +59,7 @@
       <div class="profile__main">
         <div class="profile__task">
           <div class="profile__task_header">
-            <p><span>Today</span> you have 4 points</p>
+            <p></p>
           </div>
           <button class="profile__addTask">New Task</button>
         </div>
@@ -165,5 +175,6 @@
 
     <!-- Пока не использовать -->
     <script src="script/tasks.js"></script>
+    <script src="script/caldendar.js"></script>
   </body>
 </html>

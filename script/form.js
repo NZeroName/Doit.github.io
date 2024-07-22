@@ -59,7 +59,7 @@ function redirectToPage(userId) {
   localStorage.setItem("currentUserId", userId); // Сохранение идентификатора текущего пользователя
   const submitBtn = document.querySelector(".entryForm__btn");
   if (submitBtn.textContent === "Log in") {
-    window.location.href = "test.html";
+    window.location.href = "profile.html";
   } else if (submitBtn.textContent === "SignUp") {
     window.location.href = "index.html";
   }
