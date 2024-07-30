@@ -248,7 +248,7 @@ function CreationModalTask() {
   return `
     <div class="overlay">
       <div class="modal">
-        <img class="modal__remove" src="../img/remove.svg" />
+        <img class="modal__remove" src="img/remove.svg" />
         <div class="modal__header"><input type="text" name="" id="name_task" placeholder="Untitled"></div>
         <div class="modal__body">
           <div class="modal__tagList">
