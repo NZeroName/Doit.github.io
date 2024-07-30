@@ -55,7 +55,6 @@ function isFormValid() {
 
 // Перенаправление на другую страницу после успешного входа/регистрации
 function redirectToPage(userId) {
-  removeError(email);
   localStorage.setItem("currentUserId", userId); // Сохранение идентификатора текущего пользователя
   const submitBtn = document.querySelector(".entryForm__btn");
   if (submitBtn.textContent === "Log in") {
