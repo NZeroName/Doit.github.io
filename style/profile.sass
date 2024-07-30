@@ -10,8 +10,11 @@
         position: relative
         transition: width 0.5s
         &_show
-            background-color: transparent
-            border: 1px solid transparent
+            &>button
+                background-color: transparent
+                border: 1px solid transparent
+                margin-top: 3px
+                cursor: pointer
         &>.logo
             display: flex
             align-items: center
@@ -44,8 +47,6 @@
             font-size: 16px
             border-radius: 5px
             justify-content: center
-        &_more>button
-            margin-top: 3px
             cursor: pointer
     &__calendar
         margin-top: 36px
@@ -135,6 +136,15 @@
     padding: 6px
     &__tags
         display: flex
+    &__name
+        border: none
+        outline: none
+        background-color: transparent
+        padding: 0
+        font-size: 16px
+        font-family: 'Rubik'
+        cursor: pointer
+        height: 16px
 
 .tag
     margin-left: 8px
@@ -180,3 +190,31 @@
         padding: 3px 6px
         border-radius: 5px
         cursor: pointer
+        &:hover
+            color: #727272
+.profile__settings-menu
+    position: absolute
+    z-index: 1
+    border-radius: 10px
+    background-color: #FFFFFF
+    margin-top: 5px
+    box-shadow: 0px 7px 15px 0px rgb(0 0 0 / 9%)
+    top: 50px
+    left: 0
+    &_item
+        padding: 15px 74px 15px 15px
+        font-size: 14px
+        color: #303030
+        display: flex
+        align-items: center
+        &:hover
+            background-color: #F6F6F6
+        &>img
+            padding-right: 8px
+        &:first-child
+
+            border-radius: 10px 10px 0 0
+        &:last-child
+            border-top: 1px solid #D7D7D7
+
+            border-radius: 0 0 10px 10px

@@ -1,62 +1,119 @@
-// Получение и инициализация данных
-let users = JSON.parse(localStorage.getItem("userData")) || [];
-
 // Находим элементы на странице
-let sidebar = document.querySelector(".profile__sidebar");
 let currentMenu = null;
 let currentTask = null;
 let tasks = document.querySelectorAll(".taskList__task");
 
 // Инициализация событий для задач
 function taskEvent() {
-  tasks.forEach((el) => {
-    let menuActive = el.querySelector(".task__menu_toggle");
+  tasks.forEach((task) => {
+    let menuActive = task.querySelector(".task__menu_toggle");
+
     // Обработчик клика для открытия/закрытия меню задачи
-    el.querySelector(".task__menu").addEventListener("click", (e) => {
+    task.querySelector(".task__menu").addEventListener("click", (e) => {
       e.stopPropagation();
-      toggleMenu(menuActive, el);
+      toggleMenu(menuActive, task);
     });
+
+    // Проверка задачи (отметка как выполненная)
+    task.addEventListener("click", () => checkedTask(task));
+
     // Инициализация событий для элементов меню задачи
-    menuEvent(menuActive, el);
+    menuEvent(menuActive, task);
   });
 }
 
 // Функция для обработки событий элементов меню задачи
 function menuEvent(menu, task) {
-  let menuItem = menu.querySelectorAll(".task__menu_item");
-  menuItem.forEach((item) => {
+  let menuItems = menu.querySelectorAll(".task__menu_item");
+  menuItems.forEach((item) => {
     item.addEventListener("click", (e) => {
       e.stopPropagation();
-      // Клонируем задачу и обновляем счетчик задач
       if (item.classList.contains("dublicate")) {
         cloneTask(task);
         counterTask();
       } else if (item.classList.contains("delete")) {
-        // Подтверждение удаления задачи
-        item.innerHTML = `<p>Sure?</p><button class='delete_yes'>Yes</button><button class='delete_no'>Cancel</button>`;
-        item.style.paddingRight = "18px";
-        if (e.target.textContent === "Cancel") {
-          item.style.removeProperty("padding-right");
-          item.innerHTML = `<img src="img/delete.svg" alt="" />Delete`;
-        } else if (e.target.textContent === "Yes") {
-          task.remove();
-          counterTask();
+        confirmDelete(item, task);
+      } else if (item.classList.contains("rename")) {
+        if (
+          task.querySelector(".task__name").tagName.toLowerCase() !== "input"
+        ) {
+          renameTask(task, menu);
         }
       }
     });
   });
 }
 
+// Функция подтверждения удаления задачи
+function confirmDelete(item, task) {
+  item.innerHTML = `<p>Sure?</p><button class='delete_yes'>Yes</button><button class='delete_no'>Cancel</button>`;
+  item.style.paddingRight = "18px";
+  item.querySelector(".delete_yes").addEventListener("click", () => {
+    task.remove();
+    counterTask();
+  });
+  item.querySelector(".delete_no").addEventListener("click", (e) => {
+    e.stopPropagation();
+    item.style.removeProperty("padding-right");
+    item.innerHTML = `<img src="img/delete.svg" alt="" />Delete`;
+  });
+}
+
+// Функция для переименования задачи
+function renameTask(task, menu) {
+  let input = document.createElement("input");
+  let nameTask = task.querySelector(".task__name");
+  input.type = "text";
+  input.value = nameTask.textContent;
+  input.className = nameTask.className;
+  nameTask.replaceWith(input);
+  input.focus();
+  menu.classList.toggle("menu_hide");
+
+  // События которые преобразуют input обратно в p
+  function watchInput(event) {
+    if (event.key === "Enter" || event.target !== input) {
+      replaceInputWithParagraph(task);
+      task.classList.remove("task_active");
+      // Если задача закрыта и мы ее переименовываем, убираем значение чекбокса
+      if (task.querySelector(".check__input").checked) {
+        task.querySelector(".check__input").checked = false;
+      }
+
+      input.removeEventListener("keydown", watchInput);
+      document.removeEventListener("click", watchInput);
+    }
+  }
+
+  input.addEventListener("keydown", watchInput);
+  document.addEventListener("click", watchInput);
+}
+
+// Функция для замены input на параграф после переименования
+function replaceInputWithParagraph(task) {
+  let newPElement = document.createElement("p");
+  let nameTask = task.querySelector(".task__name");
+  newPElement.textContent = nameTask.value;
+  newPElement.className = nameTask.className;
+  nameTask.replaceWith(newPElement);
+}
+
+// Функция для отметки задачи как выполненной
+function checkedTask(task) {
+  if (task.querySelector(".check__input").checked) {
+    task.querySelector(".task__name").style.textDecoration = "line-through";
+  } else
+    task.querySelector(".task__name").style.removeProperty("text-decoration");
+}
+
 // Функция для закрытия текущего открытого меню
 function closeCurrentMenu() {
   if (currentMenu) {
-    // Сбрасываем состояние кнопки удаления
     if (currentMenu.querySelector(".delete").querySelector(".delete_yes")) {
       currentMenu.querySelector(
         ".delete"
       ).innerHTML = `<img src="img/delete.svg" alt="" />Delete`;
     }
-    // Скрываем текущее меню и убираем активный класс у задачи
     currentMenu.classList.add("menu_hide");
     currentTask.classList.remove("task_active");
     currentMenu = null;
@@ -73,11 +130,9 @@ function toggleMenu(menu, task) {
       item.classList.remove("task_active");
     }
   });
-  // Переключаем видимость текущего меню и активного класса задачи
   menu.classList.toggle("menu_hide");
   task.classList.toggle("task_active");
 
-  // Обновляем текущие открытые меню и задачи
   currentMenu = menu.classList.contains("menu_hide") ? null : menu;
   currentTask = menu.classList.contains("menu_hide") ? null : task;
 }
@@ -85,20 +140,18 @@ function toggleMenu(menu, task) {
 // Функция для обновления счетчика задач
 function counterTask() {
   const counter = document.querySelector(".profile__task_header p");
-  const tasks = document.querySelector(".taskList").children.length;
-  counter.innerHTML = `<span>Today</span> you have ${tasks} points`;
+  const taskCount = document.querySelector(".taskList").children.length;
+  counter.innerHTML = `<span>Today</span> you have ${taskCount} points`;
 }
 
 // Функция для клонирования задачи
 function cloneTask(task) {
   let taskCopy = task.cloneNode(true);
-  taskCopy.classList.remove("task_active"); // Убираем активный класс у клона
-  task.insertAdjacentElement("afterend", taskCopy); // Вставляем клон после оригинала
-  // Удаляем все активное с исходной задачи
-  task.querySelector(".task__menu_toggle").classList.toggle("menu_hide");
-  task.classList.toggle("task_active");
-  taskCopy.querySelector(".task__menu_toggle").classList.toggle("menu_hide");
-  // Добавление всех обработчиков событий
+  taskCopy.classList.remove("task_active");
+  task.insertAdjacentElement("afterend", taskCopy);
+  task.querySelector(".task__menu_toggle").classList.add("menu_hide");
+  task.classList.remove("task_active");
+  taskCopy.querySelector(".task__menu_toggle").classList.add("menu_hide");
   initTaskEvents(taskCopy);
 }
 
@@ -109,46 +162,16 @@ function initTaskEvents(task) {
     e.stopPropagation();
     toggleMenu(menuActive, task);
   });
+  // Проверка задачи (отметка как выполненная)
+  task.addEventListener("click", () => checkedTask(task));
   menuEvent(menuActive, task);
-}
-
-// Функция для переключения боковой панели
-function toggleSidebar() {
-  const showBtn = document.querySelector(".profile__user_more");
-  const userName = document.querySelector(".profile__user_name");
-  showBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    sidebar.classList.toggle("showSidebar");
-    userName.classList.toggle("showName");
-    // Меняем угол поворота кнопки в зависимости от состояния боковой панели
-    showBtn.style.rotate = sidebar.classList.contains("showSidebar")
-      ? "180deg"
-      : "360deg";
-  });
-}
-
-// Функция для получения пользователя по его ID
-function getUserById(userId) {
-  return users.find((user) => user.id === parseInt(userId));
 }
 
 // Инициализация событий при загрузке документа
 document.addEventListener("DOMContentLoaded", () => {
-  taskEvent(); // Инициализация событий для задач
-  toggleSidebar(); // Инициализация событий для боковой панели
-  counterTask(); // Обновление счетчика задач
-  const currentUserId = localStorage.getItem("currentUserId");
-  if (currentUserId) {
-    const currentUser = getUserById(currentUserId);
-    if (currentUser) {
-      const nameUser = currentUser.name;
-      // Устанавливаем имя пользователя в боковую панель
-      sidebar.querySelector(".profile__user_name").innerHTML = nameUser;
-      // Устанавливаем первую букву имени пользователя в фото профиля
-      sidebar.querySelector(".profile__user_photo").innerHTML = nameUser[0];
-    }
-  }
+  taskEvent();
+  counterTask();
 });
 
 // Закрытие текущего меню при клике вне задач
-document.addEventListener("click", () => closeCurrentMenu());
+document.addEventListener("click", closeCurrentMenu);
