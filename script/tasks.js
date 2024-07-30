@@ -67,7 +67,7 @@ function renderTags() {
     document.querySelector(".tag-list").insertAdjacentHTML(
       "beforeend",
       `<div class="modal__newTag">
-        <img class='modal__colorTag' src='../img/more.svg'/>
+        <img class='modal__colorTag' src='img/more.svg'/>
         <span class='tag' style='background-color: ${tag.color}'>${tag.name}</span>
       </div>`
     );
@@ -136,7 +136,7 @@ function addTag(color, name) {
     document.querySelector(".tag-list").insertAdjacentHTML(
       "beforeend",
       `<div class="modal__newTag">
-        <img class='modal__colorTag' src='../img/more.svg'/>
+        <img class='modal__colorTag' src='img/more.svg'/>
         <span class='tag' style='background-color: ${color}'>${name}</span>
       </div>`
     );
@@ -202,8 +202,7 @@ function templateTask(tagHTML) {
                 <p class="task__name">${nameTask}</p>
               </div>
               <div class="task__tags">
-                <p class="tag">home</p>
-                <p class="tag">eat</p>
+                ${tagHTML}
               </div>
             </label>
           </div>`;
@@ -316,7 +315,7 @@ function tagClick(e) {
       `
     <div class="modal__tag">
       <span class='tag tag--active' style = 'background-color: ${tagColor}'>
-      ${tagName}<img class="remove-tag" src="../img/remove.svg" />
+      ${tagName}<img class="remove-tag" src="img/remove.svg" />
       </span>
     </div>
     `
