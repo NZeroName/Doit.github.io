@@ -242,7 +242,7 @@ table {
   font-family: "Rubik";
 }
 .profile__sidebar {
-  width: 10%;
+  width: 15%;
   padding: 67px 40px 0px 100px;
   background-color: #343B5B;
   border-radius: 0 20px 20px 0;
@@ -549,14 +549,12 @@ table {
   display: flex;
   font-size: 14px;
   color: #303030;
+  margin-bottom: 10px;
 }
 .modal__tagList > label {
   font-size: 16px;
   padding-right: 40px;
-}
-
-.modal__tag {
-  padding-bottom: 10px;
+  height: 23px;
 }
 
 .tag--active {
@@ -573,6 +571,7 @@ table {
   border-radius: 5px;
   padding: 4px;
   margin-right: 10px;
+  position: relative;
 }
 .modal__newTag > .tag {
   margin-left: 0;
@@ -599,6 +598,7 @@ table {
   font-size: 14px;
   color: #303030;
   margin-right: 10px;
+  height: 34px;
 }
 
 .modal {
@@ -678,6 +678,17 @@ table {
   margin-right: 61px;
 }
 
+.modal__tag--active {
+  border-color: #303030;
+}
+
+.tag_delete {
+  border: none;
+  background-color: transparent;
+  opacity: 60%;
+  cursor: pointer;
+}
+
 .container {
   padding: 5vh 10vh;
   font-family: "Rubik";
@@ -716,6 +727,7 @@ table {
   width: 50%;
   position: relative;
   margin-right: 3vw;
+  border-radius: 20px;
 }
 
 .banner__textContent {

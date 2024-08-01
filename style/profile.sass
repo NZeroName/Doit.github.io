@@ -3,7 +3,7 @@
     height: 100vh
     font-family: 'Rubik'
     &__sidebar
-        width: 10%
+        width: 15%
         padding: 67px 40px 0px 100px
         background-color: #343B5B
         border-radius: 0 20px 20px 0
@@ -248,11 +248,11 @@
     display: flex
     font-size: 14px
     color: #303030
+    margin-bottom: 10px
     &>label
         font-size: 16px
         padding-right: 40px
-.modal__tag
-    padding-bottom: 10px
+        height: 23px
 .tag--active
     display: flex
     align-items: center
@@ -265,7 +265,7 @@
     border-radius: 5px
     padding: 4px
     margin-right: 10px
-
+    position: relative
     &>.tag
         margin-left: 0
 
@@ -287,6 +287,7 @@
     font-size: 14px
     color: #303030
     margin-right: 10px
+    height: 34px
 .modal
     position: relative
     &__remove
@@ -343,3 +344,10 @@
     margin-left: 20px
     background-color: transparent
     margin-right: 61px
+.modal__tag--active
+    border-color: #303030
+.tag_delete
+    border: none
+    background-color: transparent
+    opacity: 60%
+    cursor: pointer

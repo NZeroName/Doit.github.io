@@ -42,10 +42,12 @@ function createTask() {
         }
       }
       if (e.target.closest(".modal__colorTag")) {
-        console.log("открываю меню");
+        if (!document.querySelector(".create__tag"))
+          return changeTag(e.target.parentNode);
       }
       if (e.target.closest(".remove-tag")) {
         e.target.parentNode.parentNode.remove();
+        removeActiveTag(e.target.parentNode.textContent.trim());
       }
       if (e.target.closest(".modal__saveTastBtn")) {
         creationTemplateTask();
@@ -58,6 +60,14 @@ function createTask() {
     });
     // Вызываем что бы события на теги работали, после открытия и закрытия создания тасков
     chooseTag();
+    // Удаляем рамку вы тегов которые выбрали
+    function removeActiveTag(removedTag) {
+      let activeTags = document.querySelectorAll(".modal__tag--active");
+      activeTags.forEach((elem) => {
+        if (elem.textContent.trim() === removedTag)
+          return elem.classList.toggle("modal__tag--active");
+      });
+    }
   });
 }
 
@@ -67,7 +77,7 @@ function renderTags() {
     document.querySelector(".tag-list").insertAdjacentHTML(
       "beforeend",
       `<div class="modal__newTag">
-        <img class='modal__colorTag' src='img/more.svg'/>
+        <img class='modal__colorTag' src='img/more.svg' alt="more"/>
         <span class='tag' style='background-color: ${tag.color}'>${tag.name}</span>
       </div>`
     );
@@ -108,7 +118,11 @@ function createTag(elem) {
     if (e.target.closest(".tag_save")) {
       if (nameTag != "") {
         // Проверка на дубль тега
-        if (!tags.find((elem) => elem.name.trim() === nameTag)) {
+        if (
+          !tags.find(
+            (elem) => elem.name.trim().toLowerCase() === nameTag.toLowerCase()
+          )
+        ) {
           tags.push({ name: nameTag, color: colorTag });
           addTag(colorTag, nameTag);
           document.querySelector(".create__tag").remove();
@@ -136,11 +150,109 @@ function addTag(color, name) {
     document.querySelector(".tag-list").insertAdjacentHTML(
       "beforeend",
       `<div class="modal__newTag">
-        <img class='modal__colorTag' src='img/more.svg'/>
+        <img class='modal__colorTag' src='img/more.svg' alt="more"/>
         <span class='tag' style='background-color: ${color}'>${name}</span>
       </div>`
     );
     chooseTag();
+  }
+}
+// Изменения тега
+function changeTag(tag) {
+  tag.style.backgroundColor = "#F6F6F6";
+  let oldNameTag = tag.querySelector(".tag").textContent.trim();
+  let oldTagColor = tag.querySelector(".tag").style.backgroundColor;
+  tag.insertAdjacentHTML(
+    "beforeend",
+    `<div class='create__tag'>
+      <div class='tag__name'><input type="text" id='tagName' value='${oldNameTag}'/></div>
+      <span class='codeColor' hidden></span>
+      <div id='previewBox' style = "background-color: ${oldTagColor}"></div>
+      <div class="tag__accept">
+        <button class='delete_yes tag_save'>Save</button>
+        <button class='delete_no tag_cancel'>Cancel</button>
+        <button class='tag_delete'><img src="img/delete.svg" class="tag_delete" alt="delete"/></button>
+      </div>
+    </div>`
+  );
+  new jscolor(document.getElementById("previewBox"), {
+    preset: "dark",
+    closeButton: true,
+    closeText: "OK",
+    value: `${oldTagColor}`,
+    valueElement: ".codeColor", // Без связанного input
+    styleElement: document.getElementById("previewBox"),
+  });
+
+  tag.querySelector(".tag__accept").addEventListener("click", (e) => {
+    let colorTag = document.querySelector(".codeColor").textContent;
+    let newNameTag = document.getElementById("tagName").value;
+    // Если нажали на сохранить тег, то проверяем что он не пустой и тег не дублируется, после чего добавляем
+    if (e.target.closest(".tag_save")) {
+      if (newNameTag != "") {
+        // Проверка на дубль тега
+        if (
+          !tags.find(
+            (elem) =>
+              elem.name.trim().toLowerCase() === newNameTag.toLowerCase()
+          )
+        ) {
+          // Проверка что бы переименованный тег не дублировал название другого тега
+          if (newNameTag.toLowerCase() !== oldNameTag.toLowerCase()) {
+            tags.find((elem) => {
+              // Ищем название прошлое название тега
+              if (elem.name.toLowerCase() === oldNameTag.toLowerCase())
+                // Переименовываем его на новое название
+                return (elem.name = newNameTag), (elem.color = colorTag);
+            });
+            // Переименовываем уже выбранный тег
+            changeActiveTag(newNameTag, colorTag);
+            tag.querySelector(".tag").textContent = `${newNameTag}`;
+            tag.querySelector(".tag").style.backgroundColor = `${colorTag}`;
+            document.querySelector(".create__tag").remove();
+          }
+        } else if (!tags.find((elem) => elem.color.trim() === colorTag)) {
+          // Смена цвета тега
+          if (oldTagColor !== colorTag) {
+            tags.find((elem) => {
+              if (elem.color === oldTagColor) return (elem.color = colorTag);
+            });
+            changeActiveTag(oldNameTag, colorTag);
+            tag.querySelector(".tag").textContent = `${oldNameTag}`;
+            tag.querySelector(".tag").style.backgroundColor = `${colorTag}`;
+            document.querySelector(".create__tag").remove();
+          }
+        }
+      }
+    }
+    // Если нажали на закрыть, то закрываем создание тега
+    if (e.target.closest(".tag_cancel")) {
+      document
+        .querySelector(".add-tag")
+        .style.removeProperty("background-color");
+      document.querySelector(".create__tag").remove();
+    }
+    // Если нажимаем на удаление, удаляем как из массива, так и из выбора тега
+    if (e.target.closest(".tag_delete")) {
+      document.querySelector(".create__tag").parentNode.remove();
+      let newTags = tags.filter(
+        (elem) => elem.name.toLowerCase() !== oldNameTag.toLowerCase()
+      );
+      tags = newTags;
+    }
+  });
+  // Показывает тег который выбран для задачи
+  function changeActiveTag(newTag, newColor) {
+    let activeTags = document.querySelectorAll(".modal__tag");
+    activeTags.forEach((tag) => {
+      let tagName = tag.querySelector(".tag");
+      let img = tag.querySelector("img");
+      if (tagName.textContent.trim() === oldNameTag) {
+        tagName.textContent = newTag;
+        tagName.style.backgroundColor = `${newColor}`;
+        tagName.appendChild(img);
+      }
+    });
   }
 }
 
@@ -167,9 +279,9 @@ function creationTemplateTask() {
   document.querySelector(".overlay").remove();
   document.body.style.removeProperty("background-color");
 }
+// Шаблоны для задачи
 function templateTask(tagHTML) {
   let nameTask = document.getElementById("name_task").value;
-
   if (nameTask == "") {
     nameTask = "Untitled";
     return `<div class="taskList__task">
@@ -179,16 +291,16 @@ function templateTask(tagHTML) {
               </button>
               <ul class="task__menu_toggle menu_hide">
                 <li class="task__menu_item rename">
-                  <img src="img/rename.svg" alt="" />Rename
+                  <img src="img/rename.svg" alt="rename" />Rename
                 </li>
                 <li class="task__menu_item changeTag">
-                  <img src="img/tag.svg" alt="" />Add/delete tag
+                  <img src="img/tag.svg" alt="tag" />Add/delete tag
                 </li>
                 <li class="task__menu_item dublicate">
-                  <img src="img/dublicate.svg" alt="" />Dublicate
+                  <img src="img/dublicate.svg" alt="dublicate" />Dublicate
                 </li>
                 <li class="task__menu_item delete">
-                  <img src="img/delete.svg" alt="" />Delete
+                  <img src="img/delete.svg" alt="delete" />Delete
                 </li>
               </ul>
             </div>
@@ -214,16 +326,16 @@ function templateTask(tagHTML) {
               </button>
               <ul class="task__menu_toggle menu_hide">
                 <li class="task__menu_item rename">
-                  <img src="img/rename.svg" alt="" />Rename
+                  <img src="img/rename.svg" alt="rename" />Rename
                 </li>
                 <li class="task__menu_item changeTag">
-                  <img src="img/tag.svg" alt="" />Add/delete tag
+                  <img src="img/tag.svg" alt="tag" />Add/delete tag
                 </li>
                 <li class="task__menu_item dublicate">
-                  <img src="img/dublicate.svg" alt="" />Dublicate
+                  <img src="img/dublicate.svg" alt="dublicate" />Dublicate
                 </li>
                 <li class="task__menu_item delete">
-                  <img src="img/delete.svg" alt="" />Delete
+                  <img src="img/delete.svg" alt="delete" />Delete
                 </li>
               </ul>
             </div>
@@ -296,15 +408,17 @@ function menuEvent(menu, task) {
 
 // Выбор тега
 function chooseTag() {
-  let tagList = document.querySelectorAll(".modal__newTag");
+  let tagList = document.querySelectorAll(".tag");
   tagList.forEach((tag) => {
     tag.removeEventListener("click", tagClick);
     tag.addEventListener("click", tagClick);
   });
 }
+//e.currentTarget сам тег, который можно выбрать
 function tagClick(e) {
-  let tagName = e.currentTarget.querySelector(".tag").textContent.trim();
-  let tagColor = e.currentTarget.querySelector(".tag").style.backgroundColor;
+  e.currentTarget.parentNode.classList.add("modal__tag--active");
+  let tagName = e.currentTarget.textContent.trim();
+  let tagColor = e.currentTarget.style.backgroundColor;
   let activeTags = document.querySelector(".modal__tagList");
   let statusTag = Array.from(activeTags.querySelectorAll(".modal__tag")).find(
     (elem) => elem.textContent.trim() == tagName
@@ -315,7 +429,7 @@ function tagClick(e) {
       `
     <div class="modal__tag">
       <span class='tag tag--active' style = 'background-color: ${tagColor}'>
-      ${tagName}<img class="remove-tag" src="img/remove.svg" />
+      ${tagName}<img class="remove-tag" src="img/remove.svg" alt="delete"/>
       </span>
     </div>
     `
@@ -333,7 +447,7 @@ function confirmDelete(item, task) {
   item.querySelector(".delete_no").addEventListener("click", (e) => {
     e.stopPropagation();
     item.style.removeProperty("padding-right");
-    item.innerHTML = `<img src="img/delete.svg" alt="" />Delete`;
+    item.innerHTML = `<img src="img/delete.svg" alt="delete" />Delete`;
   });
 }
 
@@ -391,7 +505,7 @@ function closeCurrentMenu() {
     if (currentMenu.querySelector(".delete .delete_yes")) {
       currentMenu.querySelector(
         ".delete"
-      ).innerHTML = `<img src="img/delete.svg" alt="" />Delete`;
+      ).innerHTML = `<img src="img/delete.svg" alt="delete" />Delete`;
     }
     currentMenu.classList.add("menu_hide");
     currentTask.classList.remove("task_active");
