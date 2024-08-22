@@ -1,9 +1,13 @@
 .profile
-    display: flex
+    display: grid
+    grid-template-columns: 680px 1fr
+    grid-template-rows: 1fr
+    grid-column-gap: 40px
+    grid-row-gap: 0px
     height: 100vh
     font-family: 'Rubik'
     &__sidebar
-        width: 15%
+        width: 147px
         padding: 67px 40px 0px 100px
         background-color: #343B5B
         border-radius: 0 20px 20px 0
@@ -59,18 +63,21 @@
             opacity: 50%
             padding-left: 13px
     &__main
-        margin: 55px 330px 0 310px
-        width: 90%
+        margin: 55px 330px 0 0
     &__task
         display: flex
         align-items: center
         justify-content: space-between
-        &_header
+        &_title
             font-size: 40px
             color: #303030
             font-weight: 500
-            &>p>span
+            & >span
                 color: #FF825B
+    &__settings_title
+        font-size: 40px
+        color: #303030
+        font-weight: 500
     &__addTask
         background-color: #FF825B
         border: 0
@@ -162,7 +169,7 @@
 .task_active
     background-color: #FFF5F2!important
 .showSidebar
-    width: 45%
+    width: 540px
     transition: 0.5s
 .hiddeSidebar
     width: 10%

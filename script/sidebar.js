@@ -3,6 +3,9 @@ const sidebar = document.querySelector(".profile__sidebar");
 const userIcon = document.querySelector(".profile__user_photo");
 const showBtn = document.querySelector(".profile__sidebar_show");
 const userName = document.querySelector(".profile__user_name");
+let nameUser = undefined
+let emailUser = undefined
+let passwordUser = undefined
 // Получение и инициализация данных пользователей из localStorage
 let users = JSON.parse(localStorage.getItem("userData")) || [];
 
@@ -11,7 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (currentUserId) {
     const currentUser = getUserById(currentUserId);
     if (currentUser) {
-      const nameUser = currentUser.name;
+      nameUser = currentUser.name;
+      emailUser = currentUser.email;
+      passwordUser = currentUser.password
       sidebar.querySelector(".profile__user_name").innerHTML = nameUser;
       sidebar.querySelector(".profile__user_photo").innerHTML = nameUser[0];
     }
@@ -27,6 +32,7 @@ function getUserById(userId) {
 function sidebarEvents() {
   showBtn.addEventListener("click", toggleSidebar);
   userIcon.addEventListener("click", toggleUserMenu);
+  
 }
 
 function toggleSidebar() {
@@ -44,6 +50,7 @@ function toggleUserMenu() {
     ) {
       userIcon.querySelector(".profile__settings-menu").remove();
       document.removeEventListener("click", removeSettingsMenu);
+      userIcon.removeEventListener('click', settingsProfile)
     }
   };
   if (!userIcon.querySelector(".profile__settings-menu")) {
@@ -60,6 +67,7 @@ function toggleUserMenu() {
               </ul>`
     );
     menuItemEvents();
+    
   }
   document.addEventListener("click", removeSettingsMenu);
 }
@@ -68,15 +76,42 @@ function menuItemEvents() {
     .querySelector(".profile__settings-menu")
     .querySelectorAll("li");
   menuItems.forEach((element) => {
-    element.addEventListener("click", (e) => {
+    element.addEventListener("click", function (e)  {
       e.stopPropagation();
-      console.log(element.className);
+      if (this.classList.contains('settings')) settingsProfile()
     });
   });
 }
 function settingsProfile() {
-  let userIcon = document.querySelector(".pofile__user_photo");
-  userIcon.addEventListener("click", (e) => {
-    console.log("Фото");
-  });
+    document.querySelector('.profile__main').insertAdjacentHTML('beforeend', templateSettings())
+}
+function templateSettings() {
+  return `
+      <div class="profile__settings">
+          <div class="profile__settings_title">
+          Settings
+          </div>
+          <div>
+            <div class='profile__settings_photo'>${nameUser[0]}</div>
+            <div class='profile__settings_name'>${nameUser}</div>
+          </div>
+            <div>
+              <div>
+                <span>Name</span><span>Edit<div>
+              </div>
+              <input class="entryForm__input" name="Name" type="text" placeholder="${nameUser}" />
+            </div>
+            <div>
+                <span>E-mail</span><span>Edit<div>
+              </div>
+              <input class="entryForm__input" name="email" type="email" placeholder="${emailUser}" />
+            </div>
+            <div>
+                <span>Password</span><span>Edit<div>
+              </div>
+              <input class="entryForm__input" name="password" type="password" placeholder="${passwordUser}" />
+            </div>
+          </div>
+        </div>
+  `;
 }

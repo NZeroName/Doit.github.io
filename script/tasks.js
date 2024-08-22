@@ -532,7 +532,7 @@ function toggleMenu(menu, task) {
 
 // Функция для обновления счетчика задач
 function counterTask() {
-  const counter = document.querySelector(".profile__task_header p");
+  const counter = document.querySelector(".profile__task_title");
   const taskCount = document.querySelector(".taskList").children.length;
   counter.innerHTML = `<span>Today</span> you have ${taskCount} tasks`;
 }
