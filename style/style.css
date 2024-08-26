@@ -98,6 +98,7 @@ table {
   color: #303030;
   font-size: 16px;
   width: 100%;
+  background-color: #FFFFFF;
 }
 .entryForm__input::-moz-placeholder {
   color: #aeaeae;
@@ -325,6 +326,13 @@ table {
 }
 .profile__task_title > span {
   color: #FF825B;
+}
+.profile__settings_title {
+  font-size: 40px;
+  color: #303030;
+  font-weight: 500;
+  margin-top: 33px;
+  margin-bottom: 50px;
 }
 .profile__addTask {
   background-color: #FF825B;
@@ -692,6 +700,59 @@ table {
   cursor: pointer;
 }
 
+.settings__profile-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+}
+.settings__profile-user .profile__user_photo {
+  width: 100px;
+  height: 100px;
+  font-size: 40px;
+  color: #B8B8B8;
+  background-color: #EEEEEE;
+  text-transform: uppercase;
+}
+.settings__profile-user .profile__user_name {
+  color: #303030;
+  position: inherit;
+  z-index: 1;
+  opacity: 1;
+}
+
+.settings__item {
+  margin-bottom: 30px;
+  width: 507px;
+}
+.settings__item div:first-child {
+  display: flex;
+  justify-content: space-between;
+}
+.settings__item div:first-child label {
+  font-size: 16px;
+  color: #FF825B;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.settings__name {
+  font-weight: 500;
+  font-size: 22px;
+  color: #303030;
+}
+
+.settings__input {
+  margin-top: 10px;
+  border: none;
+  border-bottom: 1px solid #AEAEAE;
+  padding-bottom: 30px;
+  background-color: #FFFFFF;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .container {
   padding: 5vh 10vh;
   font-family: "Rubik";
@@ -722,6 +783,7 @@ table {
   display: flex;
   height: 100%;
   overflow: hidden;
+  min-height: 880px;
 }
 .firstScreen__banner {
   background-image: url("../img/woman.png");

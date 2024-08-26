@@ -81,7 +81,7 @@ function SignupTemplate() {
         </div>
         <button class="entryForm__btn btnDisable" type="submit">SignUp</button>
         <label class='check'>
-          <input type="checkbox" name="policyPrivacy" id="policy" class='check__input'/> I agree with the
+          <input type="checkbox" name="policyPrivacy" id="policy" class='check__input'/> I agree with the&nbsp;
           <span class='check__box'></span>
           <a href='#'>Policy Privacy</a>
         </label>
