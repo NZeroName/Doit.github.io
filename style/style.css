@@ -723,6 +723,8 @@ table {
 .settings__item {
   margin-bottom: 30px;
   width: 507px;
+  border-bottom: 1px solid #AEAEAE;
+  position: relative;
 }
 .settings__item div:first-child {
   display: flex;
@@ -742,15 +744,50 @@ table {
 }
 
 .settings__input {
-  margin-top: 10px;
+  margin-top: 17px;
   border: none;
-  border-bottom: 1px solid #AEAEAE;
   padding-bottom: 30px;
   background-color: #FFFFFF;
+  color: #AEAEAE;
   width: 100%;
   outline: none;
   font-size: 16px;
+}
+.settings__input::-moz-placeholder {
+  color: #AEAEAE;
   font-weight: 400;
+}
+.settings__input::placeholder {
+  color: #AEAEAE;
+  font-weight: 400;
+}
+
+.settings__active {
+  padding: 20px 0 20px 20px;
+  border: 1px solid #303030;
+  border-radius: 10px;
+  margin-top: 30px;
+  color: #303030;
+  box-sizing: border-box;
+}
+
+.save-change {
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #FF825B;
+  border: none;
+  border-radius: 10px;
+  color: #FFFFFF;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding: 19px 37px;
+}
+
+.settings__hint {
+  color: #AEAEAE;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 10px;
 }
 
 .container {
