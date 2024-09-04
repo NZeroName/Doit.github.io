@@ -549,4 +549,14 @@
   font-size: 16px;
   font-weight: 400;
   margin-top: 10px;
+}
+
+.profile__back-to-tusk {
+  background-color: #FF825B;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 19px 37px;
 }/*# sourceMappingURL=profile.css.map */

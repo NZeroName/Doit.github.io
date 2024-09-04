@@ -127,37 +127,79 @@ function changeSettings(elems) {
   elems.forEach((setting) => {
     let changeValue = setting.querySelector('.setting__change');
     let settingInput = setting.querySelector('.settings__input');
-    let settingValue = settingInput.value
+    let settingValue = settingInput.value;
+    
     setting.addEventListener('click', function (e) {
       e.preventDefault();
+      
       if(e.target === changeValue) {
         settingInput.toggleAttribute('readonly');  // Переключение режима редактирования
         settingInput.classList.toggle('settings__active');  // Изменение стиля инпута
+        
         // Изменение кнопки Edit
         if (changeValue.textContent === 'Edit' || changeValue.textContent === 'Create new') {
           changeValue.style.color = '#AEAEAE';
           changeValue.textContent = 'Cancel';
           renderInput(setting, settingInput);  // Отрисовка подсказки и кнопки сохранения
-          resetPositionHint(elems)
+          resetPositionHint(elems);
+          settingValue = settingInput.value;
         } else {
           changeValue.textContent = 'Edit';
           changeValue.style.removeProperty('color');
-          setting.querySelector('.save-change').remove();  // Удаление кнопки сохранения
-          setting.querySelector('.settings__hint').remove();  // Удаление подсказки
-          setting.querySelector('.input__hint').remove();  // Удаление инпута подсказки
-          resetPositionHint(elems)
+          settingInput.value = settingValue;
+          removeChangeSettings(setting);
+          resetPositionHint(elems);
         }
+        
+      } else if (e.target === setting.querySelector('.save-change')) {
+        changeValue.textContent = 'Edit';
+        changeValue.style.removeProperty('color');
+        
+        // Обновление данных пользователя в массиве users
+        if (settingInput.id === 'name') {
+          nameUser = settingInput.value;
+        } else if (settingInput.id === 'email') {
+          emailUser = settingInput.value;
+        } else if (settingInput.id === 'password') {
+          passwordUser = settingInput.value;
+        }
+        
+        // Сохранение изменений в массив users
+        const currentUserId = localStorage.getItem("currentUserId");
+        const currentUser = users.find(user => user.id === parseInt(currentUserId));
+        if (currentUser) {
+          currentUser.name = nameUser;
+          currentUser.email = emailUser;
+          currentUser.password = passwordUser;
+        }
+        
+        // Сохранение обновленного массива пользователей в localStorage
+        localStorage.setItem("userData", JSON.stringify(users));
+        
+        // Обновление отображения имени пользователя в интерфейсе
+        document.querySelector('.profile__user_name').textContent = nameUser;
+        document.querySelector('.profile__user_photo').textContent = nameUser[0];
+        setting.parentNode.querySelector('.profile__user_name').textContent = nameUser;
+        setting.parentNode.querySelector('.profile__user_photo').textContent = nameUser[0];
+
+        removeChangeSettings(setting);
+        resetPositionHint(elems);
+        settingInput.toggleAttribute('readonly');  // Переключение режима редактирования
+        settingInput.classList.toggle('settings__active');  // Изменение стиля инпута
       }
     });
   });
 }
-
+function removeChangeSettings (elem) {
+          elem.querySelector('.save-change').remove();  // Удаление кнопки сохранения
+          elem.querySelector('.settings__hint').remove();  // Удаление подсказки
+          elem.querySelector('.input__hint').remove();  // Удаление инпута подсказки
+}
 // Функция для отображения кнопки сохранения и подсказки
 function renderInput (elem, input) {
-  let saveBtn = `<button class='save-change'>Save</button>`;
+  let saveBtnTemplate = `<button class='save-change'>Save</button>`;
   let hint = `<div class='input__hint input__hint-${input.name}'>${input.name}</div>`;
-
-  elem.insertAdjacentHTML('beforeend', `${saveBtn}`);
+  elem.insertAdjacentHTML('beforeend', `${saveBtnTemplate}`);
   elem.querySelector('div:first-child').insertAdjacentHTML('afterend', `<div class='settings__hint'>This will be used for logging in and account recovery</div>`);  
   input.insertAdjacentHTML('beforebegin', hint);
 
