@@ -74,7 +74,7 @@ function toggleUserMenu() {
                 <li class="profile__settings-menu_item settings">
                   <img src="img/settings.svg" alt="" />Settings
                 </li>
-                <li class="profile__settings-menu_item changeTag">
+                <li class="profile__settings-menu_item logout">
                   <img src="img/logout.svg" alt="" />Log out
                 </li>
               </ul>`
@@ -82,6 +82,7 @@ function toggleUserMenu() {
     menuItemEvents(); // Инициализация событий для элементов меню
   }
   document.addEventListener("click", removeSettingsMenu); // Удаление меню при клике вне области
+  document.querySelector(".logout").addEventListener("click", logOut);
 }
 
 // Инициализация событий для элементов меню
@@ -225,6 +226,18 @@ function resetPositionHint (elems) {
             }
           });
 }
+
+// Функция log out
+function logOut() {
+  // Удаляем данные о текущем пользователе из localStorage
+  localStorage.removeItem("currentUserId"); // Очищаем идентификатор текущего пользователя
+
+  // Перенаправление на страницу входа или главную страницу
+  window.location.href = "index.html"; // Перенаправляем на страницу входа
+}
+
+// Пример привязки к кнопке log out
+
 // Отрисовка настроек профиля
 function templateSettings() {
   // Прячем задачи

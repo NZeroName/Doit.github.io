@@ -1,14 +1,21 @@
 "use strict";
-// localStorage.clear();
+
 // Получение данных из localStorage
 const savedData = localStorage.getItem("userData");
-let users = JSON.parse(savedData);
-if (savedData) {
-  users;
-} else {
-  users = [];
+let users = savedData ? JSON.parse(savedData) : [];
+
+// Если данных нет, добавляем пользователя по умолчанию
+if (!savedData) {
+  const defaultUser = {
+    id: 1,
+    name: "user",
+    email: "user@user.com",
+    password: "qwerty123",
+  };
+  users.push(defaultUser);
+  localStorage.setItem("userData", JSON.stringify(users));
+  console.log("Добавлен пользователь по умолчанию:", defaultUser);
 }
-console.log("Загруженные данные из localStorage:", users);
 
 // Инициализация формы при загрузке страницы
 document.addEventListener("DOMContentLoaded", function () {
@@ -324,10 +331,7 @@ function getFormData() {
     formError(document.querySelector('input[name="E-mail"]'));
     return null;
   }
-
-  console.log("Проверка уникальности пройдена. Добавление пользователя...");
   users.push(formData);
-  console.log("Текущий список пользователей:", users);
   return formData;
 }
 
@@ -388,7 +392,6 @@ function authorization() {
 
 // Сохранение данных в localStorage
 function storage() {
-  console.log("Сохранение данных в localStorage...");
   const jsonData = JSON.stringify(users);
   localStorage.setItem("userData", jsonData);
   console.log("Данные сохранены:", jsonData);
