@@ -3,6 +3,7 @@
 // Получение данных из localStorage
 const savedData = localStorage.getItem("userData");
 let users = savedData ? JSON.parse(savedData) : [];
+const currentUserId = localStorage.getItem("currentUserId");
 
 // Если данных нет, добавляем пользователя по умолчанию
 if (!savedData) {
@@ -19,7 +20,21 @@ if (!savedData) {
 
 // Инициализация формы при загрузке страницы
 document.addEventListener("DOMContentLoaded", function () {
-  updateForm(loginTemplate());
+  const currentUserId = localStorage.getItem("currentUserId");
+
+   if (currentUserId) {
+    const users = JSON.parse(localStorage.getItem("userData")) || [];
+    const currentUser = users.find(user => user.id === parseInt(currentUserId));
+
+    // Если пользователь найден, переходим на страницу профиля
+    if (currentUser) {
+      window.location.href = "profile.html";
+    } else {
+      updateForm(loginTemplate()); // Если пользователь не найден, загружаем форму входа
+    }
+  } else {
+    updateForm(loginTemplate()); // Инициализация формы при загрузке страницы
+  }
 });
 
 const formContainer = document.querySelector(".entryForm");

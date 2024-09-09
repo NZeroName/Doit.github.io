@@ -232,8 +232,8 @@ function logOut() {
   // Удаляем данные о текущем пользователе из localStorage
   localStorage.removeItem("currentUserId"); // Очищаем идентификатор текущего пользователя
 
-  // Перенаправление на страницу входа или главную страницу
-  window.location.href = "index.html"; // Перенаправляем на страницу входа
+  // Перенаправление на страницу входа
+  window.location.href = "index.html";
 }
 
 // Пример привязки к кнопке log out
